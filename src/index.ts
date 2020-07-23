@@ -1,5 +1,7 @@
 import { CliController, CliControllerImpl } from './cliController';
 import { Constants } from './common/Constants';
+import * as mongoose from 'mongoose';
+import { SampleController } from './controllers/sample.controller';
 
 
 /*
@@ -37,14 +39,29 @@ class Runner {
         this.cliController = new CliControllerImpl({
             helpText: Constants.helpText,
             exitOperation: () => {
+                mongoose.disconnect();
                 console.log("Exitting...");
             }
         });
         this.addCommands();
+        this.connectDB();
     }
 
     private addCommands() {
-        this.cliController.addCommands([]);
+        this.cliController.addCommands([
+            {
+                command: "test",
+                method: SampleController.test
+            }
+        ]);
+    }
+
+    private async connectDB() {
+        mongoose.connect(Constants.databaseUrl, { useNewUrlParser: true, useUnifiedTopology: true })
+        .catch(err => {
+            console.log("Error while connecting to DB: ", err.message);
+            process.exit();
+        });
     }
 
     public run() {

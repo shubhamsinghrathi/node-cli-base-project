@@ -79,7 +79,7 @@ export class CliControllerImpl implements CliController {
         try {
             return await this.commands.get(input[0])(...input.splice(1));
         } catch(err) {
-            return `Error: ${err.messaage}`
+            return `Error: ${err.message}`
         }
     }
 
@@ -100,9 +100,7 @@ export class CliControllerImpl implements CliController {
             } else if (input[0] === "help") {
                 this.cliInterface.write(this.helpText);
             } else {
-                if (!this.commands.has(input[0])) {
-                    this.cliInterface.write(await this.getResponse(input) + '\n');
-                }
+                this.cliInterface.write(await this.getResponse(input) + '\n');
             }
         }
         this.cliInterface.close();
