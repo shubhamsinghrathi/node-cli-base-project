@@ -74,10 +74,10 @@ export class CliControllerImpl implements CliController {
 
     private async getResponse(input: Array<string>): Promise<string> {
         if (!this.commands.has(input[0])) {
-            return "Error: Invalid command";
+            return "Error: Invalid command\n" + this.helpText;
         }
         try {
-            return await this.commands.get(input[0])(...input.splice(1));
+            return await this.commands.get(input[0])(input.splice(1));
         } catch(err) {
             return `Error: ${err.message}`
         }
