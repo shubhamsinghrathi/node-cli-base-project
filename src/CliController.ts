@@ -1,6 +1,6 @@
 import { createInterface, Interface } from "readline";
 
-interface CommandEntry {
+export interface CommandEntry {
     command: string;
     method: Function;
 }

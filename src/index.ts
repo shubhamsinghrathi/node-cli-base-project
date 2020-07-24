@@ -1,32 +1,7 @@
 import { CliController, CliControllerImpl } from './cliController';
 import { Constants } from './common/Constants';
 import * as mongoose from 'mongoose';
-import { SampleController } from './controllers/sample.controller';
-
-
-/*
-
-## REMOVE THESE COMMENTS ##
-
-$ Hello There, welcome to splitwise CLI app
->> sadfdsafd
-$ invalid input, please enter help for all options
->> help
-$ login <username> - To login to app. Exp. [login shubham]
-  exit - To exit the interface
-  help - to get help
-  add <total money> <user1> <%age paid by user1> <user2> <%age paid by user2> - To enter money. Exp. [add 100 ss 30 pp 0 qq 20]
-  pending <username> - To get the pending balance from a user. Exp. [pending abc]
-  settle <username> - To settle balance with a user. Exp. [settle shubham]
->> add
-$ invalid format. required: add <total money> <user1> <%age paid by user1> <user2> <%age paid by user2>
->> add 100 uu 0
-$ please login first
->> login shubham
-$ add 100 uu 0
->> added successfully
-
-*/
+import { CommandCreator } from './CommandCreator';
 
 class Runner {
     private cliController: CliController;
@@ -48,12 +23,7 @@ class Runner {
     }
 
     private addCommands() {
-        this.cliController.addCommands([
-            {
-                command: "test",
-                method: SampleController.test
-            }
-        ]);
+        this.cliController.addCommands(CommandCreator.commands());
     }
 
     private async connectDB() {
